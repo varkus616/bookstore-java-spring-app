@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Role</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h2>Edit Role</h2>
+    <form th:action="@{'/admin/roles/edit/' + ${role.id}}" th:object="${role}" method="post">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" class="form-control" id="name" th:field="*{name}" />
+        </div>
+        <!-- Przywileje istniejące dla roli -->
+        <div class="form-group">
+            <label>Existing Privileges:</label>
+            <div th:each="privilege : ${privileges}">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" th:id="${'privilege-' + privilege.id}"
+                           th:value="${privilege.id}" th:checked="${role.privileges.contains(privilege)}" />
+                    <label class="form-check-label" th:for="${'privilege-' + privilege.id}" th:text="${privilege.name}"></label>
+                </div>
+            </div>
+        </div>
+    </form>
+    <h2>Add new privilege</h2>
+    <form th:action="@{'/admin/roles/edit/' + ${role.id} + '/' + ${privilege.id}}" th:object="${privilege}" method="post">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" class="form-control" id="privilegeName" th:field="*{name}" />
+        </div>
+        <button type="submit" class="btn btn-primary">Add Privilege</button>
+    </form>
+</div>
+</body>
+</html>

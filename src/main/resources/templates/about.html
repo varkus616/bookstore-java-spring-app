@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        /* Customize CSS here */
+        /* For example: */
+        body {
+          background-color: #f8f9fa;
+        }
+        .jumbotron {
+          background-color: #343a40;
+          color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" th:replace="~{@{/index} :: main-navbar}">
+    <a class="navbar-brand" href="#">Bookstore</a>
+    <!-- Navbar content -->
+</nav>
+
+<div class="jumbotron jumbotron-fluid text-center">
+    <div class="container">
+        <h1 class="display-4">About Us</h1>
+        <p class="lead">Learn more about our bookstore</p>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis viverra lacus quis justo efficitur, nec malesuada lectus aliquam. Morbi et lorem sit amet justo vehicula rhoncus nec in sem. Nulla facilisi. Vestibulum nec orci lectus. Cras eu quam vitae velit placerat malesuada. Integer ac ultricies nisl. Sed at lorem mi. Proin euismod velit velit, a sodales sem consequat ac. Aliquam erat volutpat.</p>
+            <p>Praesent ut eros id purus cursus tincidunt. Proin ut pharetra nisi. Sed laoreet mauris eu pulvinar euismod. Integer non tortor sit amet velit pharetra egestas sit amet eu odio. Ut non nisi vehicula, fringilla quam eu, eleifend nunc. Vestibulum quis magna et lacus gravida auctor. Cras tempor scelerisque dui, in gravida magna eleifend vel. Nam quis libero ex.</p>
+        </div>
+    </div>
+</div>
+
+<footer class="text-center bg-dark text-white py-4 mt-5">
+    <p>&copy; 2024 Bookstore. All rights reserved.</p>
+</footer>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

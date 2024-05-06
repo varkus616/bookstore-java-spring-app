@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Role Management</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+    <h1 class="mt-5">Role Management</h1>
+
+    <!-- Show all roles -->
+    <table class="table mt-4">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="role : ${roles}">
+            <td th:text="${role.id}"></td>
+            <td th:text="${role.name}"></td>
+            <td>
+                <a class="btn btn-primary btn-sm" th:href="@{'/admin/roles/edit/' + ${role.id}}">Edit</a>
+                <a class="btn btn-danger btn-sm" th:href="@{'/admin/roles/delete/' + ${role.id}}">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <h2 class="mt-5">Add Role</h2>
+    <form th:action="@{'/admin/roles/add/' + ${role.id}}" method="post" class="mt-3">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-success">Add Role</button>
+    </form>
+</div>
+
+</body>
+</html>

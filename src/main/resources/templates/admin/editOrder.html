@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Order</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h2>Edit Order</h2>
+    <form th:action="@{'/admin/orders/edit/' + ${order.id}}" th:object="${order}" method="post">
+        <!-- Assuming you only want to edit the order status -->
+        <div class="form-group">
+            <label for="status">Status:</label>
+            <select class="form-control" id="status" th:field="*{status}">
+                <option th:each="statusOption : ${T(com.example.demo.model.OrderStatus).values()}"
+                        th:value="${statusOption}" th:text="${statusOption}"></option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+</div>
+</body>
+</html>

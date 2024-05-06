@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purchase Details</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<style>
+    .text-success {
+        color: green;
+    }
+
+    .text-danger {
+        color: red;
+    }
+</style>
+
+
+<body>
+
+<nav th:replace="~{@{/../index} :: main-navbar}"></nav>
+
+<div class="container mt-5">
+    <div class="mt-5">
+        <h3>Purchase Orders</h3>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Order ID</th>
+                <th scope="col">Order Date</th>
+                <th scope="col">Total Amount</th>
+                <th scope="col">Order status</th>
+                <th scope="col">Order items</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td th:text="${order.id}"></td>
+                <td th:text="${order.orderDate}"></td>
+                <td th:text="${order.totalAmount}"></td>
+                <td>
+                    <table>
+                        <thead>
+                            <th scope="col">Title</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Price</th>
+                        </thead>
+                        <tbody>
+                        <tr th:each="item : ${order.orderItems}">
+                            <td th:text="${item.book.title}"></td>
+                            <td th:text="${item.quantity}"></td>
+                            <td th:text="${item.price}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<footer th:replace="~{@{/../index} :: main-footer}"></footer>
+
+</body>
+</html>

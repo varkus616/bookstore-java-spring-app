@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:fragment="main-header">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookstore</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        /* Customize CSS here */
+        /* For example: */
+        body {
+          background-color: #f8f9fa;
+        }
+        .jumbotron {
+          background-color: #343a40;
+          color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" th:fragment="main-navbar">
+    <a class="navbar-brand" th:href="@{/}">Bookstore</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+                <a class="nav-link" th:href="@{/}">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/about}">About</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/contact}">Contact</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/cart/}">My Cart</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" style="color:red;" th:href="@{/logout}">Logout</a>
+            </li>
+            <li class="nav-item" sec:authorize="isAuthenticated()">
+                <a class="nav-link" th:href="@{/my_profile}"><p style="margin-bottom: 0; margin-top: 8px; color: #ffffff;">Witaj, <b sec:authentication="name"></b></p></a>
+                <a class="nav-link" th:href="@{/my_profile}" style="padding-top: 0; padding-bottom: 0;">My Account</a>
+            </li>
+            <li class="nav-item" sec:authorize="!isAuthenticated()">
+                <a class="nav-link" href="#" th:href="@{/login}">Login</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+<div class="jumbotron jumbotron-fluid text-center">
+    <div class="container">
+        <h1 class="display-4">Welcome to Our Bookstore</h1>
+        <p class="lead">Explore our vast collection of books</p>
+        <a class="btn btn-primary btn-lg" th:href="@{/books/}" role="button">Browse Books</a>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Bestsellers</h2>
+            <p>Discover our top-selling books of the month.</p>
+            <a class="btn btn-secondary" th:href="@{/books/bestsellers}" role="button">View Bestsellers</a>
+        </div>
+        <div class="col-md-4">
+            <h2>New Arrivals</h2>
+            <p>Check out the latest additions to our collection.</p>
+            <a class="btn btn-secondary" th:href="@{/books/new_arrivals}" role="button">View New Arrivals</a>
+        </div>
+        <div class="col-md-4">
+            <h2>Special Offers</h2>
+            <p>Don't miss out on our special discounts and promotions.</p>
+            <a class="btn btn-secondary" th:href="@{/books/special_offers}" role="button">View Offers</a>
+        </div>
+    </div>
+</div>
+
+<footer class="text-center bg-dark text-white py-4 mt-5" th:fragment="main-footer">
+    <p>&copy; 2024 Bookstore. All rights reserved.</p>
+</footer>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

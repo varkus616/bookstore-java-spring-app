@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{@{/../index} :: main-header}">
+    <meta charset="UTF-8">
+    <title>Book Details</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" th:replace="~{@{/../index} :: main-navbar}">
+</nav>
+
+<div class="jumbotron jumbotron-fluid text-center">
+    <div class="container">
+        <h1 class="display-4">Book Details</h1>
+    </div>
+</div>
+
+<div class="container">
+    <p th:text="${error}" class="alert alert-danger">[...]</p>
+    <div th:if="${book != null}">
+        <div class="row">
+            <div class="col-md-6">
+                <h2 th:text="${book.title}"></h2>
+                <p>Author: <span th:text="${book.author}"></span></p>
+                <p>Price: <span th:text="${book.price}"></span></p>
+                <p>Genre: <span th:text="${book.genre}"></span></p>
+                <p>Description: <span th:text="${book.description}"></span></p>
+                <p>Stock quantity: <span th:text="${book.stockQuantity}"></span></p>
+
+                <h3>Reviews:</h3>
+                <div th:if="${book.reviews}">
+                    <div th:each="review : ${book.reviews}">
+                        <div>
+                            <p>User: <span th:text="${review.user.username}"></span></p>
+                            <p>Review Text: <span th:text="${review.reviewText}"></span></p>
+                            <p>Rating: <span th:text="${review.rating}"></span></p>
+                        </div>
+                    </div>
+                </div>
+                <div th:unless="${book.reviews}">
+                    <p>No reviews available.</p>
+                </div>
+                <form th:action="@{/books/reviews/add}" method="post">
+                    <input type="hidden" name="book" th:value="${book.id}" />
+                    <label for="reviewText">Review Text:</label><br />
+                    <textarea id="reviewText" name="reviewText" rows="4" cols="50"></textarea><br />
+                    <label for="rating">Rating:</label>
+                    <select id="rating" name="rating">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select><br />
+                    <input type="submit" value="Submit Review" />
+                </form>
+
+            </div>
+            <div class="col-md-6">
+                <img th:src="@{${book.coverUrl}}" class="img-fluid" alt="Book Cover">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <form th:action="@{/cart/add}" method="post">
+                    <input type="hidden" name="bookId" th:value="${book.id}">
+                    <input type="number" id="quantity" name="quantity" value="1" min="1" class="form-control">
+                    <button type="submit" class="btn btn-primary">Add to Cart</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{@{/../index} :: main-footer}">
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

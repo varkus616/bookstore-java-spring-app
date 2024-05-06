@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<style>
+    .text-success {
+        color: green;
+    }
+
+    .text-danger {
+        color: red;
+    }
+</style>
+
+<body>
+
+<nav th:replace="~{@{/../index} :: main-navbar}"></nav>
+
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header">
+            My Profile
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Username: <span th:text="${user.username}"></span></h5>
+            <p class="card-text">Email: <span th:text="${user.email}"></span></p>
+            <p class="card-text">Account Status: <span th:if="${user.accountNonLocked}" class="text-success">Active</span>
+                <span th:unless="${user.accountNonLocked}" class="text-danger">Locked</span></p>
+        </div>
+    </div>
+
+    <div class="mt-5">
+        <h3>Purchase History</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Total of purchases</th>
+                    <th scope="col">Total Amount of money spend</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td th:text="${purchaseHistory_count}"></td>
+                    <td th:text="${purchaseHistory.totalAmount}"></td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Number of items</th>
+                <th scope="col">Total amount</th>
+                <th scope="col">Order date</th>
+                <th scope="col">Status of order</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="order : ${purchaseOrders}">
+                <td th:text="${order.getFullNumberOfItems()}"></td>
+                <td th:text="${order.totalAmount}"></td>
+                <td th:text="${order.orderDate}"></td>
+                <td><a th:href="@{'/purchase/' + ${order.id} + '/details'}">Details</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<footer th:replace="~{@{/../index} :: main-footer}"></footer>
+
+</body>
+</html>
