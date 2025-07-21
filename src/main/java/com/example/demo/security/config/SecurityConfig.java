@@ -56,7 +56,7 @@ public class SecurityConfig{
     public SecurityFilterChain filterChain(HttpSecurity http, UserRepository userRepository) throws Exception {
         return http
                 .authorizeHttpRequests((authz) -> authz
-                        .requestMatchers("/register**")
+                        .requestMatchers("/register**", "/login**", "/images/**", "/styles/**")
                         .permitAll()
                         .requestMatchers("/admin/**")
                         .hasRole("ADMIN")

@@ -11,6 +11,10 @@
 
 <div class="container">
     <h1 class="mt-5">Order Management</h1>
+    <div th:if="${errorMessage}" class="alert alert-danger">
+        <p th:text="${errorMessage}"></p>
+    </div>
+    <a class="btn btn-secondary" th:href="@{/admin/}">Back to Dashboard</a>
 
     <!-- Show all orders -->
     <table class="table mt-4">
@@ -60,6 +64,18 @@
 
 
 </div>
+
+<footer class="footer mt-auto py-3 bg-light" >
+    <div class="container">
+        <h2>Administrative Actions</h2>
+        <ul>
+            <li><a th:href="@{/admin/roles}">Manage Roles</a></li>
+            <li><a th:href="@{/admin/books}">Manage Books</a></li>
+            <li><a th:href="@{/admin/orders}">Manage Orders</a></li>
+        </ul>
+    </div>
+</footer>
+
 
 </body>
 </html>

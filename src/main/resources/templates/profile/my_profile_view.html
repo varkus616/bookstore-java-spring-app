@@ -1,12 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head th:insert="~{@{/../index} :: main-header}">
     <title>My Profile</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
-
 <style>
     .text-success {
         color: green;
@@ -22,6 +18,12 @@
 <nav th:replace="~{@{/../index} :: main-navbar}"></nav>
 
 <div class="container mt-5">
+    <span th:if="${error != null}">
+        <p th:text="${error}"></p>
+    </span>
+    <span th:if="${success != null}">
+        <p th:text="${success}"></p>
+    </span>
     <div class="card">
         <div class="card-header">
             My Profile
@@ -29,8 +31,38 @@
         <div class="card-body">
             <h5 class="card-title">Username: <span th:text="${user.username}"></span></h5>
             <p class="card-text">Email: <span th:text="${user.email}"></span></p>
-            <p class="card-text">Account Status: <span th:if="${user.accountNonLocked}" class="text-success">Active</span>
-                <span th:unless="${user.accountNonLocked}" class="text-danger">Locked</span></p>
+            <p class="card-text">Account Status:
+                <span th:if="${user.accountNonLocked}" class="text-success">Active</span>
+                <span th:unless="${user.accountNonLocked}" class="text-danger">Locked</span>
+            </p>
+
+            <hr>
+
+            <form th:action="@{/changePassword}" method="post">
+                <div class="form-group">
+                    <label for="currentPassword">Current Password:</label>
+                    <input type="password" class="form-control" id="currentPassword" name="currentPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="newPassword">New Password:</label>
+                    <input type="password" class="form-control" id="newPassword" name="newPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm New Password:</label>
+                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Change Password</button>
+            </form>
+
+            <hr>
+
+            <form th:action="@{/deleteAccount}" method="post">
+                <div class="form-group">
+                    <label for="passwordConfirmation">Confirm Your Password to Delete Account:</label>
+                    <input type="password" class="form-control" id="passwordConfirmation" name="passwordConfirmation" required>
+                </div>
+                <button type="submit" class="btn btn-danger">Delete My Account</button>
+            </form>
         </div>
     </div>
 
@@ -73,6 +105,7 @@
 </div>
 
 <footer th:replace="~{@{/../index} :: main-footer}"></footer>
+<div th:insert="~{@{/../index} :: js-dependency}"></div>
 
 </body>
 </html>

@@ -4,15 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Management</title>
-    <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .action-buttons {
+            display: flex;
+            gap: 5px;
+        }
+    </style>
 </head>
 <body>
 
 <div class="container">
     <h1 class="mt-5">User Management</h1>
 
-    <!-- Show all users -->
+    <div th:if="${errorMessage}" class="alert alert-danger">
+        <p th:text="${errorMessage}"></p>
+    </div>
+
     <table class="table mt-4">
         <thead>
         <tr>
@@ -22,18 +30,18 @@
         </tr>
         </thead>
         <tbody>
-        <!-- Loop through users -->
         <tr th:each="user : ${users}">
             <td th:text="${user.username}"></td>
             <td th:text="${user.email}"></td>
-            <td>
-                <!-- Actions: Edit and Delete -->
+            <td class="action-buttons">
                 <a class="btn btn-primary btn-sm" th:href="@{'/admin/users/edit/' + ${user.username}}">Edit</a>
                 <a class="btn btn-danger btn-sm" th:href="@{'/admin/users/delete/' + ${user.username}}">Delete</a>
             </td>
         </tr>
         </tbody>
     </table>
+
+    <a class="btn btn-secondary" th:href="@{/admin/}">Back to Dashboard</a>
 
     <h2 class="mt-5">Add User</h2>
     <form th:action="@{'/admin/users/add/' + ${user.username}}" method="post" class="mt-3">
@@ -51,6 +59,18 @@
         </div>
         <button type="submit" class="btn btn-success">Add User</button>
     </form>
+
+
+    <footer class="footer mt-auto py-3 bg-light" >
+        <div class="container">
+            <h2>Other Administrative Actions</h2>
+            <ul>
+                <li><a th:href="@{/admin/roles}">Manage Roles</a></li>
+                <li><a th:href="@{/admin/books}">Manage Books</a></li>
+                <li><a th:href="@{/admin/orders}">Manage Orders</a></li>
+            </ul>
+        </div>
+    </footer>
 </div>
 
 </body>

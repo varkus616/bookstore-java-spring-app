@@ -115,6 +115,7 @@ public class CartService {
 
     }
 
+    @Transactional
     public void removeFromCart(Long cartItemId, User currentUser) {
         Cart mycart = getCurrentUserCart(currentUser);
         CartItem item = cartItemRepository.findCartItemById(cartItemId)
@@ -126,5 +127,12 @@ public class CartService {
         }
         cartRepository.save(mycart);
     }
+    @Transactional
+    public void clearCart(User currentUser) {
+        Cart mycart = getCurrentUserCart(currentUser);
+        mycart.getCartItems().clear();
+        cartRepository.save(mycart);
+    }
+
 
 }

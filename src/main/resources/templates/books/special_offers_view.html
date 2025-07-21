@@ -2,74 +2,32 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head th:replace="~{@{/../index} :: main-header}">
 </head>
+
+<head>
+    <link rel="stylesheet" th:href="@{/styles/books_styles.css}" type="text/css" media="all">
+</head>
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" th:replace="~{@{/../index} :: main-navbar}">
 
 </nav>
 
-<div class="jumbotron jumbotron-fluid text-center">
-    <div class="container">
-        <h1 class="display-4">Our Special Offers!</h1>
+<div class="jumbotron jumbotron-fluid text-center bgimage">
+    <div class="container" style="z-index:1; position:relative;">
+        <h1 class="display-5">Our Special Offers!</h1>
         <p class="lead">Discover a wide range of books</p>
     </div>
+    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 0;"></div>
 </div>
 
-<div class="container" >
-    <p th:text="${error}" class="alert alert-danger">[...]</p>
-    <form th:action="@{/books/search}" method="post" class="mb-3">
-        <div class="input-group">
-            <input id="search" type="search" name="bookName" class="form-control" placeholder="Search by Book Name">
-            <button type="submit" class="btn btn-primary">Search</button>
-        </div>
-    </form>
-
-    <form th:action="@{/books/filterByPrice}" method="post" class="mb-3">
-        <div class="input-group">
-            <input id="priceRange" type="range" name="price" min="0" max="1000" class="form-range"
-                   onchange="updateTextInput(this.value);">
-            <input type="text" id="textInput" value="">
-            <button type="submit" class="btn btn-primary">Apply Price Filter</button>
-        </div>
-    </form>
-
-    <form th:action="@{/books/filterByAuthor}" method="post" class="mb-3">
-        <div class="input-group">
-            <input type="search" id="author" name="author" class="form-control" placeholder="Filter by Author">
-            <button type="submit" class="btn btn-primary">Search by Author Name</button>
-        </div>
-    </form>
-    <div class="row" th:if="${books != null and not #lists.isEmpty(books)}">
-        <div class="col-md-4" th:each="book : ${books}" th:if="${book.getStockQuantity() > 0}">
-            <div class="card mb-4">
-                <img th:src="@{${book.coverUrl}}" alt="cover-image">
-                <!-- <img th:src="https://covers.openlibrary.org/b/isbn/9780385533225-S.jpg" /> -->
-                <!-- <img src="https://via.placeholder.com/300" class="card-img-top" alt="..."> -->
-                <div class="card-body">
-                    <h5 class="card-title" th:text="${book.title}"></h5>
-                    <p class="card-text" th:text="${book.author}"></p>
-                    <a th:href="@{'/books/' + ${book.id}}" class="btn btn-primary">View Details</a>
-                    <form th:action="@{/cart/add}" method="post" class="form-inline">
-                        <input type="hidden" name="bookId" th:value="${book.id}">
-                        <div class="form-group mr-2">
-                            <label for="quantity" class="mr-2">Quantity:</label>
-                            <input type="number" id="quantity" name="quantity" value="1" min="1" class="form-control">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Add to Cart</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="container"  th:insert="~{@{/books/books_view} :: books-view}" >
 </div>
 
 <footer th:replace="~{@{/../index} :: main-footer}">
 </footer>
 
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<div th:insert="~{@{/../index} :: js-dependency}"></div>
 <script>
     function updateTextInput(val) {
           document.getElementById('textInput').value=val+"$";

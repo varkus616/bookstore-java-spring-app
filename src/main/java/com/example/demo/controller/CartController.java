@@ -88,6 +88,13 @@ public class CartController {
         return "redirect:/cart/";
     }
 
+    @PostMapping("/clear")
+    public String clearCart(Principal principal) {
+        User currentUser = cartService.getCurrentUser(principal);
+        cartService.clearCart(currentUser);
+        return "redirect:/cart/";
+    }
+
     private User getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUsername = authentication.getName();

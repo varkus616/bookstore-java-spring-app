@@ -9,6 +9,10 @@
 <body>
 <div class="container mt-5">
     <h2>Edit User</h2>
+    <div th:if="${errorMessage}" class="alert alert-danger">
+        <p th:text="${errorMessage}"></p>
+    </div>
+    <a class="btn btn-secondary" th:href="@{/admin/users}">Back to users</a>
     <form th:action="@{'/admin/users/edit/' + ${user.username}}" th:object="${user}" method="post">
         <div class="form-group">
             <label for="username">Username:</label>
@@ -22,5 +26,18 @@
         <button type="submit" class="btn btn-primary">Save</button>
     </form>
 </div>
+
+<footer class="footer mt-auto py-3 bg-light" >
+    <div class="container">
+        <h2>Administrative Actions</h2>
+        <ul>
+            <li><a th:href="@{/admin/roles}">Manage Roles</a></li>
+            <li><a th:href="@{/admin/books}">Manage Books</a></li>
+            <li><a th:href="@{/admin/orders}">Manage Orders</a></li>
+        </ul>
+    </div>
+</footer>
+
+
 </body>
 </html>

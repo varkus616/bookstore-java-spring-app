@@ -15,10 +15,8 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import com.example.demo.security.model.User;
 import com.example.demo.security.service.SecurityUserDetailsService;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -64,9 +62,9 @@ public class AuthenticationController {
     }
 
     @GetMapping("/register")
-    public String register(HttpServletRequest request, HttpSession session)
+    public String register(HttpServletRequest request, HttpSession session, Model model)
     {
-        session.setAttribute("error", getErrorMessage(request, "SPRING_SECURITY_LAST_EXCEPTION"));
+        model.addAttribute("error", getErrorMessage(request, "SPRING_SECURITY_LAST_EXCEPTION"));
         return "authentication/register";
     }
 
@@ -75,18 +73,19 @@ public class AuthenticationController {
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = {
             MediaType.APPLICATION_ATOM_XML_VALUE, MediaType.APPLICATION_JSON_VALUE }
     )
-    public String addUser(@RequestParam Map<String, String> body,
+    public String addUser(@ModelAttribute("user") User user,
                           RedirectAttributes redirectAttributes,
                           HttpSession session,
-                          HttpServletRequest request)
+                          HttpServletRequest request,
+                          Model model)
     {
-        if (userRepository.existsByUsername(body.get("username"))) {
-            session.setAttribute("error", "User already exists with this username.");
-            System.out.println(session.getAttribute("error"));
+        if (userRepository.existsByUsername(user.getUsername())) {
+            model.addAttribute("error", "User already exists with this username.");
+            System.out.println(model.getAttribute("error"));
             return "redirect:/register";
         }
-        userDetailsManager.registerUser(body);
-        //session.setAttribute("error", getErrorMessage(request, "SPRING_SECURITY_LAST_EXCEPTION"));
+        userDetailsManager.registerUser(user);
+        //model.addAttribute("error", getErrorMessage(request, "SPRING_SECURITY_LAST_EXCEPTION"));
         return "redirect:/login";
     }
 

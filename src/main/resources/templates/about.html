@@ -1,37 +1,32 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
-    <style>
-        /* Customize CSS here */
-        /* For example: */
-        body {
-          background-color: #f8f9fa;
-        }
-        .jumbotron {
-          background-color: #343a40;
-          color: #ffffff;
-        }
-    </style>
+<head th:replace="~{@{/../index} :: main-header}">
+
 </head>
+<style>
+    .about-us-section {
+      margin-top: 50px;
+    }
+    .about-us-section img {
+      float: right;
+      margin-left: 20px;
+      max-width: 300px;
+      height: auto;
+    }
+</style>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark" th:replace="~{@{/index} :: main-navbar}">
-    <a class="navbar-brand" href="#">Bookstore</a>
-    <!-- Navbar content -->
+<nav th:replace="~{@{/../index} :: main-navbar}">
 </nav>
 
-<div class="jumbotron jumbotron-fluid text-center">
-    <div class="container">
-        <h1 class="display-4">About Us</h1>
+<div class="jumbotron jumbotron-fluid text-center bgimage">
+    <div class="container" style="z-index:1; position:relative;">
+        <h1 class="display-5">About Us</h1>
         <p class="lead">Learn more about our bookstore</p>
     </div>
+    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 0;"></div>
 </div>
+
 
 <div class="container">
     <div class="row">
@@ -40,15 +35,19 @@
             <p>Praesent ut eros id purus cursus tincidunt. Proin ut pharetra nisi. Sed laoreet mauris eu pulvinar euismod. Integer non tortor sit amet velit pharetra egestas sit amet eu odio. Ut non nisi vehicula, fringilla quam eu, eleifend nunc. Vestibulum quis magna et lacus gravida auctor. Cras tempor scelerisque dui, in gravida magna eleifend vel. Nam quis libero ex.</p>
         </div>
     </div>
+    <!-- About us section -->
+    <div class="row about-us-section">
+        <div class="col-md-8 mx-auto">
+            <h2 class="text-right">Why choose us?</h2>
+            <img src="https://cdn.pixabay.com/photo/2020/07/23/01/29/books-5430104_960_720.jpg" alt="Books">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis viverra lacus quis justo efficitur, nec malesuada lectus aliquam. Morbi et lorem sit amet justo vehicula rhoncus nec in sem. Nulla facilisi. Vestibulum nec orci lectus. Cras eu quam vitae velit placerat malesuada.</p>
+            <p>Praesent ut eros id purus cursus tincidunt. Proin ut pharetra nisi. Sed laoreet mauris eu pulvinar euismod. Integer non tortor sit amet velit pharetra egestas sit amet eu odio. Ut non nisi vehicula, fringilla quam eu, eleifend nunc.</p>
+        </div>
+    </div>
 </div>
-
-<footer class="text-center bg-dark text-white py-4 mt-5">
-    <p>&copy; 2024 Bookstore. All rights reserved.</p>
+<footer th:replace="~{@{/../index} :: main-footer}">
 </footer>
 
-<!-- Bootstrap JS and dependencies -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<div th:insert="~{@{/../index} :: js-dependency}"></div>
 </body>
 </html>

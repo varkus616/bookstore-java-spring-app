@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Sklep z książkami</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/styles/authentication.css}" type="text/css" media="all">
+</head>
+<body>
+<div class="container">
+    <section class="vh-100">
+        <div class="container-fluid">
+            <h1>Welcom in Books for Goods!</h1>
+            <div class="row">
+                <p th:text="${error}" th:unless="${error == null}" class="alert alert-danger">[...]</p>
+                <div class="col-sm-6">
+                    <div class="d-flex h-custom-2 align-items-center px-5 ms-xl-4 mt-5 pt-5 pt-xl-0 mt-xl-n5">
+                        <h1>Error</h1>
+                        <p th:text="${error}"></p>
+                        <a href="/register">Go back to registration</a>
+                    </div>
+                </div>
+                <div class="col-sm-6 px-0 d-none d-sm-block">
+                    <img src="https://cdn.pixabay.com/photo/2014/09/05/18/32/old-books-436498_960_720.jpg"
+                         alt="Login image" class="w-100 vh-100" style="object-fit: cover; object-position: left;">
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -8,6 +8,10 @@
 <body>
 <div class="container mt-5">
     <h2>Edit Role</h2>
+    <div th:if="${errorMessage}" class="alert alert-danger">
+        <p th:text="${errorMessage}"></p>
+    </div>
+    <a class="btn btn-secondary" th:href="@{/admin/roles}">Back to roles</a>
     <form th:action="@{'/admin/roles/edit/' + ${role.id}}" th:object="${role}" method="post">
         <div class="form-group">
             <label for="name">Name:</label>
@@ -34,5 +38,18 @@
         <button type="submit" class="btn btn-primary">Add Privilege</button>
     </form>
 </div>
+
+<footer class="footer mt-auto py-3 bg-light" >
+    <div class="container">
+        <h2>Administrative Actions</h2>
+        <ul>
+            <li><a th:href="@{/admin/roles}">Manage Roles</a></li>
+            <li><a th:href="@{/admin/books}">Manage Books</a></li>
+            <li><a th:href="@{/admin/orders}">Manage Orders</a></li>
+        </ul>
+    </div>
+</footer>
+
+
 </body>
 </html>

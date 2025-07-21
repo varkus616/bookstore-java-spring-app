@@ -4,38 +4,18 @@
     <meta charset="UTF-8">
     <title>Sklep z książkami</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- <link rel="stylesheet" th:href="@{/styles/css.css}" type="text/css" media="all"> -->
+    <link rel="stylesheet" th:href="@{/styles/authentication.css}" type="text/css" media="all">
 </head>
-<style>
-    body {
-background-color: #303030;
-color:white;
-}
-
-.bg-image-vertical {
-position: relative;
-overflow: hidden;
-background-repeat: no-repeat;
-background-position: right center;
-background-size: auto 100%;
-}
-
-@media (min-width: 1025px) {
-.h-custom-2 {
-height: 100%;
-}
-}
-</style>
 <body>
 <div class="container">
     <section class="vh-100">
-        <h1>Welcom in Books for Goods!</h1>
         <div class="container-fluid">
+            <h1>Welcom in Books for Goods!</h1>
             <div class="row">
+                <div th:if="${param.error}">
+                    <p th:text="${session.error}" th:unless="${session == null}" class="alert alert-danger">[...]</p>
+                </div>
                 <div class="col-sm-6">
-                    <div th:if="${param.error}">
-                        <p th:text="${session.error}" th:unless="${session == null}" class="alert alert-danger">[...]</p>
-                    </div>
                     <div class="d-flex h-custom-2 align-items-center px-5 ms-xl-4 mt-5 pt-5 pt-xl-0 mt-xl-n5">
                         <form style="width: 23rem;" th:action="@{/register}" method="post" >
 
@@ -65,13 +45,9 @@ height: 100%;
 
                         </form>
                     </div>
-
-
-
-
                 </div>
                 <div class="col-sm-6 px-0 d-none d-sm-block">
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/img3.webp"
+                    <img src="https://cdn.pixabay.com/photo/2014/09/05/18/32/old-books-436498_960_720.jpg"
                          alt="Login image" class="w-100 vh-100" style="object-fit: cover; object-position: left;">
                 </div>
             </div>

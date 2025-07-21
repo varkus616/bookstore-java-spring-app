@@ -5,6 +5,7 @@ import com.example.demo.model.PurchaseHistory;
 import com.example.demo.repository.CartRepository;
 import com.example.demo.security.repository.RoleRepository;
 import jakarta.persistence.EntityExistsException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,6 +16,7 @@ import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Service;
 import com.example.demo.security.model.User;
 import com.example.demo.security.repository.UserRepository;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.util.Arrays;
 import java.util.List;
@@ -48,40 +50,50 @@ public class SecurityUserDetailsService implements UserDetailsService {
 
         return user;
     }
-    public void registerUser(Map<String, String> body) {
-        String username = body.get("username");
 
-        User user = new User();
-        user.setUsername(username);
-        user.setEmail(body.get("email"));
-        user.setPassword(passwordEncoder.encode(body.get("password")));
-        user.setAccountNonLocked(true);
+    public void registerUser(@ModelAttribute User modelUser) {
+        String username = modelUser.getUsername();
 
-        user.setRoles(Arrays.asList(
-                roleRepository.findByName("ROLE_USER")
-                        .orElseThrow(() ->
-                                new RuntimeException("Role not found"))
-        ));
+        try {
+            if (userRepository.findUserByUsername(username).isPresent()) {
+                throw new RuntimeException("Użytkownik o podanej nazwie już istnieje");
+            }
 
+            User user = new User();
+            user.setUsername(username);
+            user.setEmail(modelUser.getEmail());
+            user.setPassword(passwordEncoder.encode(modelUser.getPassword()));
+            user.setAccountNonLocked(true);
+            user.setRoles(Arrays.asList(
+                    roleRepository.findByName("ROLE_USER")
+                            .orElseThrow(() -> new RuntimeException("Rola nie została znaleziona"))
+            ));
 
-        Cart cart = new Cart();
-        user.setCart(cart);
-        cart.setUser(user);
-        cartRepository.save(cart);
+            Cart cart = new Cart();
+            user.setCart(cart);
+            cart.setUser(user);
+            cartRepository.save(cart);
+            user.setCart(cart);
 
-        user.setCart(cart);
+            PurchaseHistory purchaseHistory = new PurchaseHistory();
+            user.setPurchaseHistory(purchaseHistory);
+            purchaseHistory.setUser(user);
 
-        PurchaseHistory purchaseHistory = new PurchaseHistory();
-        user.setPurchaseHistory(purchaseHistory);
-        purchaseHistory.setUser(user);
+            System.out.println(user);
 
-        System.out.println(user);
+            this.createUser(user);
 
-        userRepository.save(user);
-        //this.createUser(user);
+        } catch (RuntimeException e) {
+            System.err.println("Błąd podczas rejestracji użytkownika: " + e.getMessage());
+            throw e;
+        } catch (Exception e) {
+            System.err.println("Nieoczekiwany błąd: " + e.getMessage());
+            throw new RuntimeException("Rejestracja użytkownika nie powiodła się", e);
+        }
     }
 
-    public void createUser(UserDetails user) {
+    @Transactional
+    private void createUser(UserDetails user) {
         userRepository.save((User) user);
     }
 
@@ -103,11 +115,38 @@ public class SecurityUserDetailsService implements UserDetailsService {
             User user = optionalUser.get();
             user.setUsername(updatedUser.getUsername());
             user.setEmail(updatedUser.getEmail());
-            // Update other fields as needed
             userRepository.save(user);
         } else {
-            // Handle user not found error
             throw new RuntimeException("User not found with id: " + userId);
         }
     }
+
+    @Transactional
+    public void changePassword(String username, String currentPassword, String newPassword) {
+
+        User user = userRepository.findUserByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+        if (!passwordEncoder.matches(currentPassword, user.getPassword())) {
+            throw new IllegalArgumentException("Current password is incorrect.");
+        }
+
+        String encodedNewPassword = passwordEncoder.encode(newPassword);
+
+        user.setPassword(encodedNewPassword);
+        userRepository.save(user);
+    }
+
+    @Transactional
+    public void deleteUser(String username, String passwordConfirmation) {
+        User user = userRepository.findUserByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+        if (!passwordEncoder.matches(passwordConfirmation, user.getPassword())) {
+            throw new IllegalArgumentException("Password confirmation is incorrect.");
+        }
+
+        userRepository.delete(user);
+    }
+
 }

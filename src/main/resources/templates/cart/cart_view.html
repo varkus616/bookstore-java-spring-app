@@ -1,23 +1,26 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cart</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<head th:insert="~{@{/../index} :: main-header}">
+    <title>My Cart</title>
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark" th:replace="~{@{/../index} :: main-navbar}">
+<nav th:replace="~{@{/../index} :: main-navbar}">
 </nav>
 
-<div class="container">
-    <div class="jumbotron">
-        <h1 class="display-4">Your Cart</h1>
+<div class="jumbotron jumbotron-fluid text-center bgimage">
+    <div class="container" style="z-index:1; position:relative;">
+        <h1 class="display-5">Your Cart</h1>
     </div>
+    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 0;"></div>
+</div>
 
+<div class="container">
+    <form th:action="@{/cart/clear}" method="post">
+        <button type="submit" class="btn btn-danger">Remove all products</button>
+    </form>
     <div th:if="${cart.cartItems.size() > 0}">
+        <h2 class="display-3">Products added</h2>
         <table class="table">
             <thead class="thead-dark">
             <tr>
@@ -33,7 +36,7 @@
             <tr th:each="cartItem : ${cart.cartItems}">
                 <td th:text="${cartItem.book.title}"></td>
                 <td th:text="${cartItem.book.author}"></td>
-                <td th:text="${cartItem.book.price}"></td>
+                <td th:text="${cartItem.book.price + '$'}"></td>
                 <td th:text="${cartItem.quantity}"></td>
                 <td th:text="${(cartItem.book.price * cartItem.quantity)}"></td>
                 <td>
@@ -58,9 +61,7 @@
 <footer th:replace="~{@{/../index} :: main-footer}">
 </footer>
 
-<!-- Bootstrap JS and dependencies -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<div th:insert="~{@{/../index} :: js-dependency}"></div>
+
 </body>
 </html>

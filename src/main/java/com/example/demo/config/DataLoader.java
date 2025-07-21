@@ -69,7 +69,7 @@ public class DataLoader implements CommandLineRunner {
                     Collections.singletonList("Author not known"));
             String author = tempAuthors.isEmpty() ? "Author not known" : tempAuthors.get(0);
 
-            String coverUrl = "https://via.placeholder.com/300"; // Default cover URL
+            String coverUrl = "/images/no-image.jpg";
             if (bookData.containsKey("cover_edition_key")) {
                 String cover_key = (String) bookData.get("cover_edition_key");
                 coverUrl = "https://covers.openlibrary.org/b/olid/" + cover_key + "-M.jpg";
